@@ -1,0 +1,17 @@
+{
+  "name": "imusic",
+  "version": "1.0.0",
+  "description": "一个为你定制的音乐播放器",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "back",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.0.3",
+    "electron-reloader": "^1.2.3"
+  }
+}

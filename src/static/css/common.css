@@ -1,0 +1,12 @@
+@font-face {
+    font-family: myfont;
+    src: url(fontextender.ttf);
+}
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: myfont;
+}
