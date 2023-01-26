@@ -1,4 +1,4 @@
-const {app , BrowserWindow , Tray , Menu , nativeImage, ipcMain} = require('electron')
+const {app , BrowserWindow , Tray , Menu , nativeImage , ipcMain} = require('electron')
 
 //启用热加载
 const reloader = require('electron-reloader')
@@ -12,11 +12,11 @@ app.on('ready',() => {
         height: 800,
         frame: false,
         icon: "src/static/image/icon.png",
-        resizable: false,
+        resizable: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true
+            enableRemoteModule: true,
         }
     })
 
@@ -51,12 +51,28 @@ app.on('ready',() => {
 
     tray.setContextMenu(traymenu)
 
-    // 监听渲染进程传来的最小化和关闭
+    // 处理渲染进程传过来的最小化窗口请求
     ipcMain.on('window-mini' , function(){
         MainWindow.minimize()
     })
     
+    // 处理渲染进程传过来的关闭窗口请求
     ipcMain.on('window-close' , function(){
        MainWindow.close()
     })
+
+    // 处理渲染进程传过来的最小化到系统托盘请求
+    ipcMain.on('window-hide' , function(){
+        MainWindow.hide()
+    })
+
+    // protocol.interceptFileProtocol('atom', (req, callback) => {
+    //     const url = req.url.substring(8);
+    //     callback(decodeURI(url));
+    //     console.log(123)
+    //   }, (error) => {
+    //     if (error) {
+    //       console.error('Failed to register protocol');
+    //     }
+    //   });
 })

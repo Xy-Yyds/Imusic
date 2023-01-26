@@ -48,7 +48,7 @@
             <!-- 发现音乐菜单导航 -->
             <div class="menu-item">
                 <a href=""><span>发现音乐</span></a>
-                <div class="childmenu">
+                <div class="childmenu bg-secondary">
                     <a href="">广场</a>
                 </div>
                 <div class="childmenu">
@@ -94,23 +94,225 @@
         <!-- 主内容展示区域 -->
         <div class="content col-10">
 
+            <!-- 今日推荐板块 -->
+            <div class="item">
+                <div class="title">
+                    今日推荐
+                </div>
+                <div class="maincontent">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/Everybody Dies In Their Nightmares.jpg" class="start">
+                        </div>
+                    </div>
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/第二杯半价.jpg" class="start">
+                        </div>
+                    </div>
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/熬夜上瘾.jpg" class="start">
+                        </div>
+                    </div>
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/群青.png" class="start">
+                        </div>
+                    </div>
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/想想念念.png" class="start">
+                        </div>
+                    </div>
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <img src="../static/image/River Flows In You.png" class="start">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 音乐播放器 -->
+    <div class="footer">
+
+        <div class="musicname">
+            <img src="../static/image/Everybody Dies In Their Nightmares.jpg" class="song-icon">
+            <div class="song-info">
+                <div class="song-name" style="font-size: 22px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                    Everybody Dies In Their Nightmares
+                </div>
+                <div class="user-name">
+                    XXXTENTACION
+                </div>
+            </div>
+        </div>
+
+        <div class="controller">
+
+            <div class="kongzhi">
+                <img src="../static/image/shangyishou.png">
+                <img src="../static/image/bofang.png" class="toggle">
+                <img src="../static/image/xiayishou.png">
+            </div>
+
+            <div class="jindutiao">
+                <div class="starttime" style="display: inline-block;">
+                    00:00
+                </div>
+
+                <div class="progress" role="progressbar" style="height: 10px;width: 330px;cursor: pointer;display: inline-block;">
+                    <div class="progress-bar" style="width: 0%;height: 10px;background-color: #94B0A2;"></div>
+                </div>
+
+                <audio src="../static/audio/Everybody Dies In Their Nightmares.mp3" id="player" preload="auto">
+                </audio>
+
+                <div class="endtime" style="display: inline-block;">
+                    01:35
+                </div>
+            </div>
+        </div>
+
+        <div class="song-sheet">
+
+        </div>
+    </div>
+
+    <!-- 关闭提示 -->
+    <div class="close-reminder">
+
+        <!-- 关闭关闭提示窗口 -->
+        <div class="close-icon text-end">
+            <img src="../static/image/closeicon.png" alt="">
+        </div>
+
+        <!-- 关闭提示的标题 -->
+        <div class="text-center">
+            关闭提示
+        </div>
+
+        <!-- 关闭提示操作内容 -->
+        <div class="content">
+
+            <!-- 最小化到系统托盘选择框 -->
+            <div class="item">
+                <input type="radio" name="close" value="window-hide">最小化到系统托盘
+            </div>
+
+            <!-- 退出app选择框 -->
+            <div class="item">
+                <input type="radio" name="close" value="window-close">退出Imusic
+            </div>
+
+            <!-- 确定操作按钮 -->
+            <div class="close-check text-end">
+                <button>确定</button>
+            </div>
+
         </div>
     </div>
 </body>
-<script>
+<script charset="UTF-8" type="text/javascript">
+
+    // 获取需要的node模块
     let { ipcRenderer } = require('electron')
 
     // 使用require引入jquery从而解决使用scrip标签引入jquery产生的冲突
     window.$ = window.jQuery = require('../static/js/jquery3.6.3.js')
 
+    //定义相关的全局变量
+    //进度条的进度值，百分比形式
+    let progressnum = null
+    //音乐播放器中音乐现在播放的时长
+    let starttime = null
+    //音乐播放器中音乐的时长
+    let endtime = 95
+    //音乐播放器的src资源
+    let playersrc= null
+    //获取html页面中的音乐播放器存到javascript的全局变量中
+    let player = $("#player")[0]
+    //音乐的播放器中音乐名字
+    let songname = null
+
+    // 计算音频的时长
+    const countAudioTime = async () => {
+        while (isNaN(player.duration) || player.duration === Infinity) {
+            // 延迟一会 不然网页都卡死
+            await new Promise(resolve => setTimeout(resolve, 200));
+            // 设置随机播放时间，模拟调进度条
+            player.currentTime = 10000000 * Math.random();
+        }
+        // 将获的音频时长传给全局变量endtime保存
+        endtime = Math.floor(player.duration)
+        // 将时长转化成 “00:00” 的形式渲染到渲染进程上
+        $(".endtime").delay(10000).text( "0" + Math.floor(endtime/60) + ":" + (endtime%60>10 ? endtime%60 : "0"+endtime%60))
+        // 重置player的currenTime
+        player.currentTime = 0
+    }
+
+    // 当用户想要最小化app时传给主进程最小化app
     $(".miniicon").click(function(){
         ipcRenderer.send("window-mini")
     })
 
+    // 当用户想要退出应用时弹出关闭提示，提示用户是退出app还是最小化到系统托盘
     $(".tuichuicon").click(function(){
-        ipcRenderer.send('window-close')
+        $(".close-reminder").show()
     })
 
+    // 隐藏我们的关闭提示
+    $(".close-reminder .close-icon").click(function(){
+        $(".close-reminder").hide()
+    })
 
+    // 获取用户是想要退出app还是隐藏到托盘并且执行该操作
+    $(".close-reminder .close-check").click(function(){
+        ipcRenderer.send($("input[type='radio']:checked").val())
+        $(".close-reminder").hide()
+    })
+
+    // 拖拽进度条时改变player的currentTime值并且改变进度条的进度
+    $(".progress").mousedown(function(e){
+        progressnum = (e.pageX-435) / 330 * 100
+        progressnum = progressnum + '%'
+        $(".progress-bar").css("width",progressnum)
+        player.currentTime = (e.pageX-435) / 330 * endtime
+    })
+
+    // 点击播放或者暂停按钮时暂停或者播放
+    $(".toggle").click(function(){
+        if(player.paused){
+            player.play()
+            $(this).attr("src" , "../static/image/zhanting.png")
+        }else{
+            player.pause()
+            $(this).attr("src" , "../static/image/bofang.png")
+        }
+    })
+
+    // 播放或者进度变化时对左边的时间和进度条进行改变
+    player.ontimeupdate = function(){
+        starttime = Math.floor(player.currentTime)
+        $(".progress-bar").css("width",starttime/endtime*100 + '%')
+        starttime = "0" + Math.floor(starttime/60) + ":" + (starttime%60 > 10 ? starttime%60 : '0' + starttime%60)
+        $(".starttime").text(starttime)
+    }
+
+    // 点击音乐资源时，在下方的音乐的播放器中加载音乐的信息
+    $(".start").click(function(){
+        $(".starttime").text("00:00")
+        playersrc = $(this).attr("src")
+        $("#player").attr("src" , (playersrc.slice(0,playersrc.lastIndexOf(".")) + ".mp3").replace("image","audio"))
+        countAudioTime()
+        songname = playersrc.substring(playersrc.lastIndexOf("/")+1,playersrc.lastIndexOf("."))
+        $(".song-name").text(songname)
+        $(".musicname img").attr("src",playersrc)
+        $(".toggle").attr("src" , "../static/image/bofang.png")
+    })
 </script>
 </html>

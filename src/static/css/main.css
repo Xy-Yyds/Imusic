@@ -13,6 +13,11 @@
     -webkit-app-region: drag;
 }
 
+.frameleft img{
+    width: 35px;
+    height: 35px;
+}
+
 .framesearch input{
     width: 250px;
     height: 33px;
@@ -85,7 +90,7 @@
     overflow:hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    
+    border-radius: 10px;
 }
 
 .childmenu img{
@@ -99,7 +104,106 @@
     color: #484738;
 }
 
-.frameleft img{
-    width: 35px;
-    height: 35px;
+.close-reminder{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    width: 400px;
+    height: 230px;
+    background: #2F4858;
+    font-size: 28px;
+    color: #C3FCF2;
+    display: none;
+}
+
+.close-reminder .close-icon{
+    padding-right: 10px;
+}
+
+.close-reminder .content .item{
+    padding-left: 70px;
+}
+
+.close-reminder .content .close-check{
+    padding-right: 10px;
+}
+
+.content{
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.content .item .title{
+    font-size: 30px;
+}
+
+
+.mycard-body img{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #C4D2BD;
+    transform: all 1.5s cubic-bezier(.76,-0.18,.85,.73);
+    cursor: pointer;
+}
+
+.mycard-body img:hover{
+    transform: scale(1.1);
+}
+
+.mycard-body img:active{
+    transform: scale(0.9);
+}
+
+.item:nth-child(1) .maincontent{
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-top: 1px solid #ADAC9A;
+    background-color: #F7F5DD;
+    z-index: 2;
+    display: flex;
+}
+
+.footer .musicname img{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.musicname{
+    display: flex;
+    width: 300px;
+}
+
+.controller{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 580px;
+}
+
+.controller .kongzhi img{
+    width: 27px;
+    height: 27px;
+}
+
+.controller .kongzhi img{
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.song-sheet{
+    width: 300px;
 }
