@@ -1,0 +1,109 @@
+
+.content{
+    overflow: hidden;
+}
+
+.content,.guanzhu .item{
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    height: 1px;
+    width: 0;
+ }
+
+.guanzhu{
+    padding-right: 10px;
+    border-right: 1px solid black;
+    overflow-y: scroll;
+}
+
+.dongtai{
+    position: absolute;
+    font-size: 35px;
+}
+
+.guanzhu .item{
+    margin-bottom: 10px;
+}
+
+.guanzhu .avatar{
+    padding-left: 120px;
+}
+
+.guanzhu .avatar img{
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+}
+
+.guanzhu .title{
+    margin-top: -8px;
+}
+
+.guanzhu .title .username{
+    font-size: 27px;
+}
+
+.guanzhu .caozuo{
+    padding-top: 20px;
+}
+
+.guanzhu .caozuo img{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.guanzhu .maincontent{
+    padding-top: 20px;
+    font-size: 22px;
+    border-bottom: 1px solid black;
+    padding-bottom: 30px;
+}
+
+.myboke-head{
+    padding: 15px;
+    padding-left: 20px;
+    background-color: #F1E3D5;
+}
+
+.myboke .myboke-head .title{
+    font-size: 23px;
+}
+
+.myboke .myboke-head .title img{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.myboke .myboke-head .caozuo{
+    display: flex;
+    justify-content: start;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.myboke .myboke-head .caozuo .item{
+    width: 50px;
+    font-size: 20px;
+    text-align: center;
+    margin-right: 2px;
+    cursor: pointer;
+}   
+
+.myboke-content{
+    height: 100%;
+}
+
+.nodata{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+}
+
+.nodata img{
+    width: 100px;
+    height: 100px;
+}
